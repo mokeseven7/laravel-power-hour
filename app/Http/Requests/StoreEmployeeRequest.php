@@ -2,20 +2,10 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 
-class StoreEmployeeRequest extends FormRequest
+class StoreEmployeeRequest extends StatelessRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return false;
-    }
-
+   
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,7 +14,29 @@ class StoreEmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'email' 		=> 'required|unique:employees|max:255',
+            'name' 		=> 'required|max:255',
+            'employee_id' 	=> 'required|regex:/^[0-9]{2}[-][A-Z]{1,}$/'
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'email.required' 	=> 'You must enter an email',
+            'email.unique' 	=> 'That email is already taken, please try again or reset your password',
+            'email.max' 	=> 'Talk to the boss man, i wanted 256, he said no.', 
+            
+            'name.required' 	=> 'You Must Enter An Name',
+            'name.max' 		=> 'Okay maybe its actually a database limitation, but still', 
+
+            'employee_id' 	=> 'employee_id should be in format of 11-ABCDEFG'
         ];
     }
 }
+

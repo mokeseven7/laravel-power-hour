@@ -15,28 +15,24 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        return Employee::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreEmployeeRequest  $request
      * @return \Illuminate\Http\Response
+     * @throws 
      */
     public function store(StoreEmployeeRequest $request)
     {
-        //
+	// The safe() method is an explicit call to validate(), which returns an instance of ValidatedRequest
+	$employee = Employee::create($request->safe()->only(['name', 'email', 'employee_id']));
+
+	return response()->json($employee); 
+
     }
 
     /**
@@ -47,19 +43,9 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        //
+        return response()->json($employee);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Employee  $employee
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Employee $employee)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -68,9 +54,18 @@ class EmployeeController extends Controller
      * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateEmployeeRequest $request, Employee $employee)
+    public function update(UpdateEmployeeRequest $request, $id)
     {
-        //
+	// Get the validated inputs, array filter without a callback removes empties 
+	// so we dont have to care weather they sent 1,2 or 3 updated props
+	$inputs = array_filter($request->safe()->only(['name', 'email', 'employee_id']));
+
+        $employee = Employee::find($id);
+
+	$employee->update($inputs);
+
+        // Return the updated model, we have to call refresh since we resolved the model with route-model binding
+        return response()->json($employee);
     }
 
     /**
@@ -79,8 +74,10 @@ class EmployeeController extends Controller
      * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Employee $employee)
+    public function destroy($id)
     {
-        //
+        Employee::find($id)->delete();
+
+        return response()->json(['message' => "Employee With ID {$id} deleted"]);
     }
 }
