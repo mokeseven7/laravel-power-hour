@@ -1,9 +1,18 @@
-# GCE Employee API 
+# Laravel Power Hour
 
-This readme contains setup instructions, sample requests, and information on the authentication mechanism I chose. There is 100% test coverage which is validated on every commimt. The environment is fully containerized, and offeres a few different options for setup. This is my favorite dev environment setup at the moment becuase of how flexibile it is, and how quickly it allows someone to jump into a codebase. 
+This repo is a real coding exercise I completed during a skills assetment a few months ago. 
 
+The challenge of the exercise was to create a single CRUD endpoint in the laravel frameworking with a `1 Hour` time constraint.
+
+If you look at the [commit history](https://github.com/mokeseven7/laravel-power-hour/commits/main), you'll get a realistic idea of how I work, what I prioritized, and what tradeoffs I made. 
+
+There are a few mistakes, and I know a few things I would have done differently, but it is a true authentic look into my work style. 
+
+The total elapsed time from start to finish was `1 Hour And 12 Minuets`
 
 > Dont forget check out the `actions` tab of this repo. There is some cool stuff started. There would be some ever more cool stuff if I had more time ;)
+
+------------------------------
 
 ## Environment Setup
 
